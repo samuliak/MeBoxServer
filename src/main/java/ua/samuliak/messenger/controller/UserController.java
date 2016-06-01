@@ -20,10 +20,16 @@ public class UserController {
         return userService.getAllUSer();
     }
 
-    @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/get/id{id}", method = RequestMethod.GET)
     @ResponseBody
     public User getUserById(@PathVariable("id") long userId){
         return userService.getUserById(userId);
+    }
+
+    @RequestMapping(value = "/user/get/name{name}", method = RequestMethod.GET)
+    @ResponseBody
+    public User getUserByName(@PathVariable("name") String userLogin){
+        return userService.getByLogin(userLogin);
     }
 
     @RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)
@@ -31,9 +37,10 @@ public class UserController {
     public void removeUser(@PathVariable("id") long userId){
         userService.removeUser(userId);
     }
+
     @RequestMapping(value = "/user", method = RequestMethod.POST)
     @ResponseBody
-    public void saveUSer(@RequestBody User user){
+    public void saveUser(@RequestBody User user){
         userService.save(user);
     }
 }

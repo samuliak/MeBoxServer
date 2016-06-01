@@ -5,7 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Client")
+@Table(name = "\"user\"")
 public class User {
 
     @Id
@@ -14,13 +14,25 @@ public class User {
     private long id;
 
     @Column(nullable = false, length = 20)
-    private String nickname;
+    private String login;
 
     @Column(nullable = false, length = 20)
     private String password;
 
     @Column(length = 2)
     private String country;
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinColumn(name = "room_id")
+    private Room room;
+
+    public Room getRoom() {
+        return room;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
+    }
 
     public User() {}
 
@@ -32,12 +44,12 @@ public class User {
         this.id = id;
     }
 
-    public String getNickname() {
-        return nickname;
+    public String getLogin() {
+        return login;
     }
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public String getPassword() {

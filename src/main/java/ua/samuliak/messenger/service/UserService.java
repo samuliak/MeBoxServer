@@ -1,6 +1,7 @@
 package ua.samuliak.messenger.service;
 
 
+import org.springframework.data.repository.query.Param;
 import ua.samuliak.messenger.entity.User;
 
 import java.util.List;
@@ -11,5 +12,5 @@ public interface UserService {
     User getUserById(long id);
     void removeUser(long id);
     void save(User user);
-
+    User getByLogin(@Param("name") String name);
 }

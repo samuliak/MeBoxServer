@@ -2,6 +2,7 @@ package ua.samuliak.messenger.service.Impl;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import ua.samuliak.messenger.entity.User;
 import ua.samuliak.messenger.repository.UserRepository;
@@ -30,4 +31,9 @@ public class UserServiceImpl implements UserService{
     public void save(User user) {
         userRepository.saveAndFlush(user);
     }
+
+    public User getByLogin(@Param("name") String name) {
+        return userRepository.findByName(name);
+    }
+
 }

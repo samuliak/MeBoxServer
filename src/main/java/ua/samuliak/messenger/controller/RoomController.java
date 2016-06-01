@@ -2,10 +2,13 @@ package ua.samuliak.messenger.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import ua.samuliak.messenger.entity.Message;
 import ua.samuliak.messenger.entity.Room;
+import ua.samuliak.messenger.service.MessageService;
 import ua.samuliak.messenger.service.RoomService;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 public class RoomController {
@@ -14,6 +17,7 @@ public class RoomController {
     @Autowired
     private RoomService roomService;
 
+    // <!---- Работа из Room ----!>
     @RequestMapping(value = "/rooms", method = RequestMethod.GET)
     @ResponseBody
     public List<Room> getAllRooms(){
@@ -40,4 +44,5 @@ public class RoomController {
 
     // @PathVariable - принимаем {id} из HTTP запроса и сохраняем данные в "long id". Потом удаляем по нем.
     // @RequestBody - похожое на @PathVariable, только сохраняет объект, а не примитивный тип данных.
+    // @ResponseBody - Аннотация показывает что данный метод может возвращать кастомный объект в виде xml, json...
 }
