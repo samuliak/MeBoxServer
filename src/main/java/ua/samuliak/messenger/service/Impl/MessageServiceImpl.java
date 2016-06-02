@@ -1,14 +1,12 @@
 package ua.samuliak.messenger.service.Impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import ua.samuliak.messenger.entity.Message;
 import ua.samuliak.messenger.repository.MessageRepository;
 import ua.samuliak.messenger.service.MessageService;
 
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class MessageServiceImpl implements MessageService {
@@ -32,7 +30,7 @@ public class MessageServiceImpl implements MessageService {
         messageRepository.delete(id);
     }
 
-    public List<Message> findMessagesByRoomId(@Param("idRoom") long idRoom) {
-        return messageRepository.findMessagesByRoomId(idRoom);
-    }
+//    public List<Message> findMessagesByRoomId(@Param("idRoom") long idRoom) {
+//        return messageRepository.findMessagesByRoomId(idRoom);
+//    }
 }

@@ -1,7 +1,6 @@
 package ua.samuliak.messenger.service;
 
 
-import org.springframework.data.repository.query.Param;
 import ua.samuliak.messenger.entity.Message;
 
 import java.util.List;
@@ -11,5 +10,5 @@ public interface MessageService {
     Message getById(long id);
     Message save(Message message);
     void remove(long id);
-    List<Message> findMessagesByRoomId(@Param("name") long id_Room);
+//    List<Message> findMessagesByRoomId(@Param("name") long id_Room);
 }

@@ -3,7 +3,6 @@ package ua.samuliak.messenger.entity;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Table(name = "message")
@@ -12,56 +11,50 @@ public class Message {
     @Id
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name = "increment", strategy = "increment")
-    private long id;
+    private Long id;
 
-    @Column(nullable = false)
-    private long id_room;
-
-    @Column(nullable = false)
-    private long id_user;
+    @ManyToOne
+    @JoinColumn(name = "room_id")
+    private Room room;
 
     @Column(nullable = false)
     private String value;
 
-    @Column(nullable = false)
-    private String date;
-
     // зв'язок із кімнатою
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "message")
-    private Set<Room> rooms;
-
-    public Set<Room> getRooms() {
-        return rooms;
-    }
-
-    public void setRooms(Set<Room> rooms) {
-        this.rooms = rooms;
-    }
+//    @OneToMany(fetch = FetchType.EAGER, mappedBy = "message")
+//    @JsonManagedReference
+//    private Set<Room> rooms;
+//
+//
+//    public Set<Room> getRooms() {
+//        return rooms;
+//    }
+//
+//    public void setRooms(Set<Room> rooms) {
+//        this.rooms = rooms;
+//    }
 
     public Message() {}
 
-    public long getId() {
+    public Message(Room room, String value) {
+        this.room = room;
+        this.value = value;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public long getId_room() {
-        return id_room;
+    public Room getRoom() {
+        return room;
     }
 
-    public void setId_room(long id_room) {
-        this.id_room = id_room;
-    }
-
-    public long getId_user() {
-        return id_user;
-    }
-
-    public void setId_user(long id_user) {
-        this.id_user = id_user;
+    public void setRoom(Room room) {
+        this.room = room;
     }
 
     public String getValue() {
@@ -70,13 +63,5 @@ public class Message {
 
     public void setValue(String value) {
         this.value = value;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
     }
 }

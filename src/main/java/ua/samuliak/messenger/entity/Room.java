@@ -3,6 +3,7 @@ package ua.samuliak.messenger.entity;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -12,55 +13,59 @@ public class Room {
     @Id
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name = "increment", strategy = "increment")
-    private long id;
-
-    @Column(nullable = false)
-    private long id_user;
+    private Long id;
 
     @Column(nullable = false, length = 30)
     private String title;
 
-    //Зв'язок з юзером
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "room")
-    private Set<User> users;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    public Set<User> getUsers() {
-        return users;
-    }
+    @OneToMany(mappedBy = "room")
+    private Set<Message> messages = new HashSet<Message>();
 
-    public void setUsers(Set<User> users) {
-        this.users = users;
-    }
 
-    //Зв'язок з месендж
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JoinColumn(name = "id_message")
-    private Message message;
-
-    public Message getMessage() {
-        return message;
-    }
-
-    public void setMessage(Message message) {
-        this.message = message;
-    }
+//    //Зв'язок з юзером
+//    @OneToMany(fetch = FetchType.EAGER, mappedBy = "room")
+//    @JsonManagedReference
+//    private Set<User> users;
+//
+//    public Set<User> getUsers() {
+//        return users;
+//    }
+//
+//    public void setUsers(Set<User> users) {
+//        this.users = users;
+//    }
+//
+//    //Зв'язок з месендж
+//    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+//    @JsonBackReference
+//    @JoinColumn(name = "id_message")
+//    private Message message;
+//
+//    public Message getMessage() {
+//        return message;
+//    }
+//
+//    public void setMessage(Message message) {
+//        this.message = message;
+//    }
 
     public Room() {}
 
-    public long getId() {
+    public Room(String title, User user) {
+        this.user = user;
+        this.title = title;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
-    }
-
-    public long getId_user() {
-        return id_user;
-    }
-
-    public void setId_user(long id_user) {
-        this.id_user = id_user;
     }
 
     public String getTitle() {
@@ -69,5 +74,13 @@ public class Room {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
