@@ -1,94 +1,48 @@
 package ua.samuliak.messenger.entity;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "\"user\"")
 public class User {
 
     @Id
-    @GeneratedValue(generator = "increment")
-    @GenericGenerator(name = "increment", strategy = "increment")
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "user_id")
+    private Integer userID;
 
-    @Column(name = "id_room")
-    private Long room;
-
-    @Column(nullable = false, length = 20)
-    private String login;
-
-    @Column(nullable = false, length = 20)
-    private String password;
-
-    @Column(length = 2)
-    private String country;
-
-    @OneToMany(mappedBy = "user")
-    private Set<Room> rooms = new HashSet<Room>();
-
-//    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-//    @JsonBackReference
-//    @JoinColumn(name = "room_id")
-//    private Room room;
-//
-//    public Room getRoom() {
-//        return room;
-//    }
-//
-//    public void setRoom(Room room) {
-//        this.room = room;
-//    }
+    private String name;
 
     public User() {}
 
-    public User(String login, String password, String country) {
-        this.login = login;
-        this.password = password;
-        this.country = country;
+    public User(String name) {
+        this.name = name;
     }
 
-    public long getId() {
-        return id;
+    public Integer getUserID() {
+        return userID;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setUserID(Integer userID) {
+        this.userID = userID;
     }
 
-    public Long getRoom() {
-        return room;
+    public String getName() {
+        return name;
     }
 
-    public void setRoom(Long room) {
-        this.room = room;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("User [userID=");
+        builder.append(userID);
+        builder.append(", name=");
+        builder.append(name);
+        builder.append("]");
+        return builder.toString();
     }
 }
-

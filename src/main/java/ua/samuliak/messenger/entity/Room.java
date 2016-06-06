@@ -1,86 +1,63 @@
 package ua.samuliak.messenger.entity;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
-
 @Entity
 @Table(name = "room")
 public class Room {
 
     @Id
-    @GeneratedValue(generator = "increment")
-    @GenericGenerator(name = "increment", strategy = "increment")
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "room_id")
+    private Integer roomID;
 
-    @Column(nullable = false, length = 30)
-    private String title;
+    private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    @OneToMany(mappedBy = "room")
-    private Set<Message> messages = new HashSet<Message>();
-
-
-//    //Зв'язок з юзером
-//    @OneToMany(fetch = FetchType.EAGER, mappedBy = "room")
-//    @JsonManagedReference
-//    private Set<User> users;
-//
-//    public Set<User> getUsers() {
-//        return users;
-//    }
-//
-//    public void setUsers(Set<User> users) {
-//        this.users = users;
-//    }
-//
-//    //Зв'язок з месендж
-//    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-//    @JsonBackReference
-//    @JoinColumn(name = "id_message")
-//    private Message message;
-//
-//    public Message getMessage() {
-//        return message;
-//    }
-//
-//    public void setMessage(Message message) {
-//        this.message = message;
-//    }
+    @OneToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User owner;
 
     public Room() {}
 
-    public Room(String title, User user) {
-        this.user = user;
-        this.title = title;
+    public Room(String name, User owner) {
+        super();
+        this.name = name;
+        this.owner = owner;
     }
 
-    public Long getId() {
-        return id;
+    public Integer getRoomID() {
+        return roomID;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setRoomID(Integer roomID) {
+        this.roomID = roomID;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public User getUser() {
-        return user;
+    public User getOwner() {
+        return owner;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Room [roomID=");
+        builder.append(roomID);
+        builder.append(", name=");
+        builder.append(name);
+        builder.append(", owner=");
+        builder.append(owner);
+        builder.append("]");
+        return builder.toString();
     }
 }

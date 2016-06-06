@@ -1,10 +1,15 @@
 package ua.samuliak.messenger.repository;
 
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
 import ua.samuliak.messenger.entity.Message;
 
-public interface MessageRepository extends JpaRepository<Message, Long> {
-//    @Query("from Message m where m.id_room = idRoom")
-//    List<Message> findMessagesByRoomId(@Param("idRoom") long idRoom);
+import java.util.List;
+
+public interface MessageRepository extends CrudRepository<Message, Integer> {
+
+    @Query("select m from Message m where room_id = ?1")
+    List<Message> findAllByRoomID(Integer roomID);
+
 }

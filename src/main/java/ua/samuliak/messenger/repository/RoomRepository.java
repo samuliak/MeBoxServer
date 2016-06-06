@@ -1,7 +1,10 @@
 package ua.samuliak.messenger.repository;
 
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 import ua.samuliak.messenger.entity.Room;
+public interface RoomRepository extends CrudRepository<Room, Integer> {
 
-public interface RoomRepository extends JpaRepository<Room, Long> {}
+    Room findByName(String name);
+
+}

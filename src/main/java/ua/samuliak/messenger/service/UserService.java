@@ -8,9 +8,9 @@ import java.util.List;
 
 public interface UserService {
     //Work with User repository
-    List<User> getAllUSer();
-    User getUserById(long id);
-    void removeUser(long id);
+    List<User> getAllUser();
+    User getUserById(int id);
+    void removeUser(int id);
     void save(User user);
     User getByLogin(@Param("name") String name);
 }

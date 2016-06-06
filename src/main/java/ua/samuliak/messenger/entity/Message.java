@@ -1,67 +1,93 @@
 package ua.samuliak.messenger.entity;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "message")
 public class Message {
 
     @Id
-    @GeneratedValue(generator = "increment")
-    @GenericGenerator(name = "increment", strategy = "increment")
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "message_id")
+    private Integer messageID;
+
+    private String text;
+
+    @Column(name = "creation_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date creationDate = new Date();
 
     @ManyToOne
-    @JoinColumn(name = "room_id")
-    private Room room;
+    @JoinColumn(name = "user_id", nullable = false)
+    private User author;
 
-    @Column(nullable = false)
-    private String value;
-
-    // зв'язок із кімнатою
-//    @OneToMany(fetch = FetchType.EAGER, mappedBy = "message")
-//    @JsonManagedReference
-//    private Set<Room> rooms;
-//
-//
-//    public Set<Room> getRooms() {
-//        return rooms;
-//    }
-//
-//    public void setRooms(Set<Room> rooms) {
-//        this.rooms = rooms;
-//    }
+    @ManyToOne
+    @JoinColumn(name = "room_id", nullable = false)
+    private Room thread;
 
     public Message() {}
 
-    public Message(Room room, String value) {
-        this.room = room;
-        this.value = value;
+    public Message(String text, User author, Room thread) {
+        this.text = text;
+        this.author = author;
+        this.thread = thread;
     }
 
-    public Long getId() {
-        return id;
+    public Integer getMessageID() {
+        return messageID;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setMessageID(Integer messageID) {
+        this.messageID = messageID;
     }
 
-    public Room getRoom() {
-        return room;
+    public String getText() {
+        return text;
     }
 
-    public void setRoom(Room room) {
-        this.room = room;
+    public void setText(String text) {
+        this.text = text;
     }
 
-    public String getValue() {
-        return value;
+    public Date getCreationDate() {
+        return creationDate;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public User getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(User author) {
+        this.author = author;
+    }
+
+    public Room getThread() {
+        return thread;
+    }
+
+    public void setThread(Room thread) {
+        this.thread = thread;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Message [messageID=");
+        builder.append(messageID);
+        builder.append(", text=");
+        builder.append(text);
+        builder.append(", creationDate=");
+        builder.append(creationDate);
+        builder.append(", author=");
+        builder.append(author);
+        builder.append(", thread=");
+        builder.append(thread);
+        builder.append("]");
+        return builder.toString();
     }
 }
