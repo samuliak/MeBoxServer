@@ -7,7 +7,6 @@ import ua.samuliak.messenger.entity.Presence;
 import ua.samuliak.messenger.entity.Room;
 import ua.samuliak.messenger.repository.MessageRepository;
 import ua.samuliak.messenger.repository.PresenceRepository;
-import ua.samuliak.messenger.repository.RoomRepository;
 import ua.samuliak.messenger.service.RoomService;
 import ua.samuliak.messenger.service.UserService;
 
@@ -26,8 +25,6 @@ public class RoomController {
     private MessageRepository messageRepository;
     @Autowired
     private PresenceRepository presenceRepository;
-
-
 
     // <!---- Работа из Room ----!>
     @RequestMapping(value = "/rooms", method = RequestMethod.GET)
@@ -69,12 +66,10 @@ public class RoomController {
     }
 
     /////////////////  Відправити смс в кімнату.
-    @RequestMapping(value = "/room/{roomName}/message/{name}/{text}", method = RequestMethod.GET)
+    @RequestMapping(value = "/room/message/", method = RequestMethod.POST)
     @ResponseBody
-    public void sendMessageInRoom(@PathVariable("roomName") String roomName,
-                                  @PathVariable("name") String name, @PathVariable("text") String text) {
-        messageRepository.save(new Message(text, userService.getByLogin(name),
-                roomService.getByName(roomName)));
+    public void sendMessageInRoom(@RequestBody Message message) {
+        messageRepository.save(message);
     }
 
     //////////////   Отримати всі смс по кімнаті
@@ -87,4 +82,6 @@ public class RoomController {
         }
         return list;
     }
+
+
 }
