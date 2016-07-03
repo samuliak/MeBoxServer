@@ -27,10 +27,26 @@ public class RoomController {
     private PresenceRepository presenceRepository;
 
     // <!---- Работа из Room ----!>
+
+    ///////////// Отримати всі кімнати
     @RequestMapping(value = "/rooms", method = RequestMethod.GET)
     @ResponseBody
-    public List<Room> getAllRooms(){
-        return roomService.getAllRooms();
+    public List<Room> getSortedRooms(){
+        return roomService.getSortedRooms();
+    }
+
+    ///////////// Отримати кімнати між діапазону
+    @RequestMapping(value = "/rooms/from{a}/to{b}", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Room> getPartRooms(@PathVariable("a") int a, @PathVariable("b") int b){
+        return roomService.getPartRooms(a, b);
+    }
+
+    ///////////// Отримати кількість кімнат
+    @RequestMapping(value = "/rooms/count", method = RequestMethod.GET)
+    @ResponseBody
+    public long getCountRooms(){
+        return roomService.getCountRooms();
     }
 
     /////////////   Отримати кімнату по ІД

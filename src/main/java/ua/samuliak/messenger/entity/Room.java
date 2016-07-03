@@ -1,6 +1,8 @@
 package ua.samuliak.messenger.entity;
 
 import javax.persistence.*;
+import java.util.Date;
+
 @Entity
 @Table(name = "room")
 public class Room {
@@ -12,13 +14,18 @@ public class Room {
 
     private String name;
 
+    private String password;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date creationDate = new Date();
+
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User owner;
 
     public Room() {}
 
-    public Room(String name, User owner) {
+    public Room(String name, User owner, String password) {
         super();
         this.name = name;
         this.owner = owner;
@@ -46,6 +53,22 @@ public class Room {
 
     public void setOwner(User owner) {
         this.owner = owner;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override

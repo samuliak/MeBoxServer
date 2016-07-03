@@ -20,12 +20,23 @@ public class RoomServiceImpl implements RoomService {
     @Autowired
     private MessageRepository messageRepository;
 
-    public List<Room> getAllRooms() {
-        List<Room> list = new ArrayList<Room>();
-        for ( Room room : roomRepository.findAll() ) {
-            list.add(room);
+    public List<Room> getSortedRooms() {
+          return roomRepository.getSortedRooms();
+    }
+
+    public List<Room> getPartRooms(int a, int b) {
+        List<Room> list = roomRepository.getSortedRooms();
+        a--; b--;
+        List<Room> partList = new ArrayList<Room>();
+        for(int i=0; i<list.size(); i++){
+            if(i >= a && i < b)
+                partList.add(list.get(i));
         }
-        return list;
+        return partList;
+    }
+
+    public long getCountRooms() {
+        return roomRepository.getSortedRooms().size();
     }
 
     public Room getById(int id) {

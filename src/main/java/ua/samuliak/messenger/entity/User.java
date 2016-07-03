@@ -13,10 +13,21 @@ public class User {
 
     private String name;
 
+    private String password;
+
+    private String occupation;
+
+    private int age;
+
+    private byte[] imageByteArray;
+
     public User() {}
 
-    public User(String name) {
+    public User(String name, String password, String occupation, int age) {
         this.name = name;
+        this.password = password;
+        this.occupation = occupation;
+        this.age = age;
     }
 
     public Integer getUserID() {
@@ -33,6 +44,38 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getOccupation() {
+        return occupation;
+    }
+
+    public void setOccupation(String occupation) {
+        this.occupation = occupation;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public byte[] getImageByteArray() {
+        return imageByteArray;
+    }
+
+    public void setImageByteArray(byte[] imageByteArray) {
+        this.imageByteArray = imageByteArray;
     }
 
     @Override

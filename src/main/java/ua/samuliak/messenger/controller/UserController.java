@@ -43,7 +43,7 @@ public class UserController {
     }
 
     //////////////////   Зберегти юзера
-    @RequestMapping(value = "/user", method = RequestMethod.POST)
+    @RequestMapping(value = "/user/new", method = RequestMethod.POST)
     @ResponseBody
     public void saveUser(@RequestBody User user){
         userService.save(user);
